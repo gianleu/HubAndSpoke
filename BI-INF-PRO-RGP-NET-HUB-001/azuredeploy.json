@@ -35,24 +35,6 @@
     "adminPassword": {
       "type": "securestring"
     },
-    "authenticationType": {
-      "type": "string",
-      "allowedValues": [
-        "password",
-        "sshPublicKey"
-      ],
-      "defaultValue": "password",
-      "metadata": {
-        "description": "Authentication type"
-      }
-    },
-    "sshPublicKey": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Administrator SSH public key"
-      }
-    },
     "fwVmSize": {
       "type": "string",
       "defaultValue": "Standard_D3_v2",
@@ -69,6 +51,43 @@
     "fwImageSKU": {
       "type": "string"
     },
+    "cpCloudGuardVersion": {
+      "type": "string",
+      "allowedValues": [
+        "R77.30 - Bring Your Own License",
+        "R77.30 - Pay As You Go (NGTP)",
+        "R80.10 - Bring Your Own License",
+        "R80.10 - Pay As You Go (NGTP)",
+        "R80.10 - Pay As You Go (NGTX)"
+      ],
+      "defaultValue": "R80.10 - Bring Your Own License",
+      "metadata": {
+        "description": "Version of Check Point Cloud Guard"
+      }
+    },
+    "cpAuthenticationType": {
+      "type": "string",
+      "allowedValues": [
+        "password",
+        "sshPublicKey"
+      ],
+      "defaultValue": "password",
+      "metadata": {
+        "description": "Authentication type"
+      }
+    },
+    "cpSshPublicKey": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Administrator SSH public key"
+      }
+    },
+    
+
+    VERIFICARE SE SERVE PASSARE I PARAMETRI DELLA RETE. PROBABILMENTE NO, VISTO CHE LA VNET VIENE CREATA IN PRECEDENZA
+
+
     "cpManagementGUIClientNetwork": {
       "type": "string",
       "metadata": {
@@ -181,6 +200,14 @@
     },
     "clientRootCertData": {
       "type": "string"
+    },
+    "artifactsBaseUrl": {
+      "type": "string",
+      "defaultValue": "https://raw.githubusercontent.com/gianleu/HubAndSpoke/master/BI-INF-PRO-RGP-NET-HUB-001/",
+      "metadata": {
+        "description": "Base URL of the solution template gallery package",
+        "artifactsBaseUrl": ""
+      }
     }
   },
   "variables": {
@@ -204,7 +231,10 @@
     "externalNSG": "[concat(parameters('deploymentPrefix'), 'externalNSG')]",
     "vpnGatewayName": "[concat(parameters('deploymentPrefix'), 'vpnGateway')]",
     "vpnGatewayIpName": "[concat(parameters('deploymentPrefix'), 'vpnGatewayIp')]",
-    "clientRootCertName": "[concat(parameters('deploymentPrefix'), 'RootCert')]"
+    "clientRootCertName": "[concat(parameters('deploymentPrefix'), 'RootCert')]",
+    "cpStandAloneBYOLTemplateFolder": "nestedtemplates",
+    "cpStandAloneBYOLTemplateFileName": "cpStandAloneBYOL.json",
+    "cpStandAloneBYOLTemplateParametersFileName": "cpStandAloneBYOL.parameters.json"
   },
   "resources": [
     {
@@ -660,6 +690,59 @@
             }
           ]
         }
+      }
+    },
+    {
+      "name": "cpStandAloneBYOL",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-09-01",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('fw1ExtNicName'))]",
+        "[concat('Microsoft.Network/networkInterfaces/', variables('fw1IntNicName'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('artifactsBaseUrl'), '/', variables('cpStandAloneBYOLTemplateFolder'), '/', variables('cpStandAloneBYOLTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parametersLink": {
+          "uri": "[concat(parameters('artifactsBaseUrl'), '/', variables('cpStandAloneBYOLTemplateFolder'), '/', variables('cpStandAloneBYOLTemplateParametersFileName'), parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[resourceGroup().location]"
+          },
+          "vsecVersion": {
+            "value": "[parameters('cpCloudGuardVersion')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "authenticationType": {
+            "value": "[parameters('cpAuthenticationType')]"
+          },
+          "sshPublicKey": {
+            "value": "[parameters('cpSshPublicKey')]"
+          },
+          "vmName": {
+            "value": "[variables('fw1Name')]"
+          },
+          "vmSize": {
+            "value": "[parameters('fwVmSize')]"
+          },
+          "virtualNetworkName": {
+            "value": "[variables('hubVnetName')]"
+          },
+          "virtualNetworkAddressPrefix": {
+            "value": "[parameters('hubAddressSpace')]"
+          },
+          "Subnet1Name": {
+            "value": "[parameters('')]"
+          }
+        }
+
       }
     },
     {

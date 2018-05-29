@@ -25,12 +25,12 @@
   <ItemGroup>
     <Content Include="azuredeploy.json" />
     <Content Include="azuredeploy.parameters.json" />
-    <None Include="cpStandAloneBYOL.json" />
-    <None Include="cpStandAloneBYOL.parameters.json" />
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>
     <Content Include="Deploy-AzureResourceGroup.ps1" />
+    <Content Include="nestedtemplates\cpStandAloneBYOL.json" />
+    <Content Include="nestedtemplates\cpStandAloneBYOL.parameters.json" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
