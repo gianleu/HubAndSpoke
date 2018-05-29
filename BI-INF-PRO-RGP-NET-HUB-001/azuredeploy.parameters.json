@@ -1,6 +1,103 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "deploymentPrefix": {
+      "value": "HUB-"
+    },
+    "deployVpnGateway": {
+      "value": "yes"
+    },
+    "resiliencyModel": {
+      "value": "availabilitySets"
+    },
+    "adminUsername": {
+      "value": "AzureAdmin"
+    },
+    "fwVmSize": {
+      "value": "Standard_A2"
+    },
+    "fwImagePublisher": {
+      "value": "OpenLogic"
+    },
+    "fwImageOffer": {
+      "value": "CentOS"
+    },
+    "fwImageSKU": {
+      "value": "7.3"
+    },
+    "availabilitySetPlatformFaultDomainCount": {
+      "value": "3"
+    },
+    "availabilitySetPlatformUpdateDomainCount": {
+      "value": "5"
+    },
+    "hubAddressSpace": {
+      "value": "10.12.136.0/24"
+    },
+    "hubGatewayAddressSpace": {
+      "value": "192.168.255.0/24"
+    },
+    "hubExternalSubNetAddressSpace": {
+      "value": "10.12.136.192/26"
+    },
+    "hubInternalSubnetAddressSpace": {
+      "value": "10.12.136.128/26"
+    },
+    "hubSharedSubnetAddressSpace": {
+      "value": "10.12.136.0/25"
+    },
+    "onPremAddressSpace": {
+      "value": "10.11.2.0/24"
+    },
+    "vpnClientAddressPoolPrefix": {
+      "value": "192.168.254.0/24"
+    },
+    "hubGatewaySubnetAddressSpace": {
+      "value": "192.168.255.128/27"
+    },
+    "fw1ExternalAddress": {
+      "value": "10.12.136.196"
+    },
+    "fw2ExternalAddress": {
+      "value": "10.12.136.197"
+    },
+    "fw1InternalAddress": {
+      "value": "10.12.136.132"
+    },
+    "fw2InternalAddress": {
+      "value": "10.12.136.133"
+    },
+    "fwIlbAddress": {
+      "value": "10.12.136.134"
+    },
+    "fwIlbProbePort": {
+      "value": "22"
+    },
+    "fwElbProbePort": {
+      "value": "80"
+    },
+    "vpnGatewaySku": {
+      "value": "vpnGw1"
+    },
+    "cpManagementGUIClientNetwork": {
+      "value": "10.12.136.0/25"
+    },
+    "cpInstallationType": {
+      "value": "standalone"
+    },
+    "cpAllowDownloadFromUploadToCheckPoint": {
+      "value": "false"
+    },
+    "cpAdditionalDiskSizeGB": {
+      "value": 0
+    },
+    "cpAdditionalDiskType": {
+      "value": "Standard_LRS"
+    },
+    "clientRootCertData": {
+      "value": "MIIC5zCCAc+gAwIBAgIQReJRn2JMyqZOD6oqpVzMZjANBgkqhkiG9w0BAQsFADAWMRQwEgYDVQQDDAtQMlNSb290Q2VydDAeFw0xNzA2MDcxNjM5MDlaFw0xODA2MDcxNjU5MDlaMBYxFDASBgNVBAMMC1AyU1Jvb3RDZXJ0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6Eo3EsowSXvcgq4rd6IgRNNCgWzURC7lQGC6IRoS/toFZcedsEhjDomObNGiUPVkMbf7vcUjj0UfuPey7783o3SGe0XO7bitFcY8GeO0j0qZNg6f7+BPlh7e62F+rlW167BAvIEhKsXyoWmGTwK56EirCm6Jt5kRA3ctGAWsTdQw9Xbf1ihfO5Km0/u09rxPfHsQ9PSwET0PfVRRSzb2mlnlbplKftzPaxBIPLJ4kFdtavEYeetw6xF1wngAppBdG19JnvgVZ6S5HlNp3P/L3e8wbhn+CL27kVUhR32uil7wf2YSTvAQegz9XSH4ldr4kLomcb93F9fSstiUtjiY/QIDAQABozEwLzAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0OBBYEFL1xFk7iMxw8rGQ7isPZhjHPlVygMA0GCSqGSIb3DQEBCwUAA4IBAQBFtrNZq6MPXmrU1RSq6w4vhmqC5fkfCkpIhlFs/lt/pV+FGAZ9EnByGD3TzjUj9xtxNTbM9yDLbhBYf5JgxYRPqiwgD1lT4SBtEG2dFIK4WIw6NxwhFwgOdYGwqhOE3t3GdaEuvn9KfOSfzNAe6pKh18mWhS0Pe+vH+icA1kEjBz0rtybHOx639wnKTMYAIl2QRNhWXdCi/pdXiCiCDlhZipG5fqq3KfNVXbjWfvRB8sQ1hm08E2L9Xn6JdXQYu1yHUsfXVuXf3ctnJi09W9m+XXXbwAnbjZvUG4g0I2I8t1BhxzTSea+aHE861LgDw2moTA6SPSIGe2K6wPy9Q0Vt"
+    }
   }
 }
+
